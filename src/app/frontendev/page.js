@@ -2,12 +2,13 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-25 21:29:46
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-06-26 18:25:41
+ * @LastEditTime: 2024-06-26 19:21:42
  * @FilePath: /online-course-project/src/app/frontendev/page.js
  */
 "use client";
 
-import CourseCard from "@/components/CourseCard";
+import styles from "@/components/course.module.css";
+import CourseList from "@/components/CourseList";
 import FilterSelection from "@/components/FilterSelection";
 import Footer from "@/components/Footer";
 import MainNav from "@/components/MainNav";
@@ -20,41 +21,59 @@ import Typography from "@mui/material/Typography";
 
 const FrontendevPage = () => {
   const options = ["HTML", "CSS", "JavaScript", "React", "Vue", "Angular"];
-
+  const frontendCourses = [
+    {
+      courseId: "FE101",
+      title: "Introduction to HTML & CSS",
+      lecturer: "John Doe",
+      postDate: "2024-01-15",
+    },
+    {
+      courseId: "FE102",
+      title: "Advanced JavaScript Techniques",
+      lecturer: "Jane Smith",
+      postDate: "2024-02-10",
+    },
+    {
+      courseId: "FE103",
+      title: "Responsive Web Design with Flexbox",
+      lecturer: "Emily Johnson",
+      postDate: "2024-03-05",
+    },
+    {
+      courseId: "FE104",
+      title: "Building Interactive UIs with React",
+      lecturer: "Michael Brown",
+      postDate: "2024-04-12",
+    },
+    {
+      courseId: "FE105",
+      title: "State Management in React with Redux",
+      lecturer: "Chris Davis",
+      postDate: "2024-05-20",
+    },
+    {
+      courseId: "FE106",
+      title: "Web Performance Optimization",
+      lecturer: "Patricia Garcia",
+      postDate: "2024-06-18",
+    },
+  ];
   return (
     <div>
       <MainNav />
       <Box
-        sx={(theme) => ({
-          width: "100%",
-          backgroundColor: "rgba(0, 0, 0, .4)",
-          backgroundBlendMode: "multiply",
+        className={styles.courseBackground}
+        style={{
           backgroundImage: "url('/images/image01.webp')",
-          backgroundSize: "100%",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center, -350px",
-        })}
+        }}
       >
-        <Container
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            pt: { xs: 14, sm: 20 },
-            pb: { xs: 8, sm: 12 },
-          }}
-        >
+        <Container className={styles.courseMainContainer}>
           <Stack spacing={2} sx={{ width: { xs: "100%" } }}>
-            <Typography
-              variant="h1"
-              sx={{
-                alignSelf: "center",
-                textAlign: "center",
-                fontWeight: 700,
-                color: "#fff",
-                textShadow: "black 0.1em 0.1em 0.2em",
-                fontSize: "clamp(2.5rem, 10vw, 3rem)",
-              }}
-            >
+            <Typography variant="h1" className={styles.coursePageTitle}>
+              Front End Development
+            </Typography>
+            <Typography variant="h2" className={styles.coursePageSubTitle}>
               Step into the realm of front-end engineering and explore the
               fascinating world of web development.
             </Typography>
@@ -82,13 +101,13 @@ const FrontendevPage = () => {
           <Box>
             <FilterSelection filter={options} />
           </Box>
-          <CourseCard />
-          <CourseCard />
-          <CourseCard />
+          <Box>
+            <CourseList frontendCourses={frontendCourses} />
+          </Box>
         </Stack>
-        <Stack spacing={2} sx={{ mt: 8 }}>
+        <Stack spacing={2} mt={8}>
           <Pagination
-            sx={{ justifyContent: "center", display: "flex" }}
+            className={styles.pagination}
             count={5}
             showFirstButton
             showLastButton
