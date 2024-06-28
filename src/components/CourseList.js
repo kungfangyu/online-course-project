@@ -2,7 +2,7 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-26 15:28:27
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-06-26 18:56:03
+ * @LastEditTime: 2024-06-28 16:34:34
  * @FilePath: /online-course-project/src/components/CourseList.js
  */
 import Favorite from "@mui/icons-material/Favorite";
@@ -17,13 +17,13 @@ import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-
-const CourseList = ({ frontendCourses }) => {
+import Link from "next/link";
+const CourseList = ({ courses }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   return (
     <Grid container spacing={2} justifyContent="space-around">
-      {frontendCourses.map((course) => {
+      {courses.map((course) => {
         return (
           <Grid item xs={12} sm={6} md={4} key={course.courseId}>
             <Card
@@ -35,32 +35,38 @@ const CourseList = ({ frontendCourses }) => {
                 height: "100%",
               }}
             >
-              <CardActionArea onClick={() => setPaymentType("bankTransfer")}>
-                <CardMedia
-                  component="img"
-                  height="194"
-                  image="/images/image01.webp"
-                  alt="Paella dish"
-                />
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {course.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Lecture: {course.lecturer}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Post Date: {course.postDate}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
+              <Link href={`/frontendev/${course.courseId}`}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="194"
+                    image={course.image_url}
+                    alt="Paella dish"
+                  />
+                  <CardContent>
+                    <Typography variant="h6" component="div">
+                      {course.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Lecture: {course.lecturer}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Post Date: {course.published}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Link>
               <CardActions disableSpacing>
                 <Checkbox
                   {...label}
                   icon={<FavoriteBorder />}
                   checkedIcon={<Favorite />}
                 />
-                <IconButton>
+                <IconButton
+                  onClick={
+                    <Link href={`/frontendev/${course.courseId}`}></Link>
+                  }
+                >
                   <VisibilityIcon />
                 </IconButton>
               </CardActions>

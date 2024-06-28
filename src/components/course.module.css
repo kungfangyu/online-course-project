@@ -7,6 +7,14 @@
   background-blend-mode: multiply;
 }
 
+.courseDetailBackground {
+  width: 100%;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center, -350px;
+  background-image: linear-gradient(180deg, #cee5fd, #fff);
+}
+
 .courseMainContainer {
   display: flex;
   align-items: center;
@@ -50,4 +58,40 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.courseDetailPageTitle {
+  text-align: left;
+  color: #000;
+  font-weight: 700;
+  font-size: clamp(2rem, 10vw, 2.5rem);
+  text-shadow: rgb(255, 255, 255) 0.1em 0.1em 0.2em;
+}
+
+.courseDetailPageSubTitle {
+  text-align: left;
+  color: #8c8c8c;
+  font-weight: 400;
+  font-size: clamp(1rem, 10vw, 1.8rem);
+}
+
+.contentMainTitle {
+  font-weight: 700;
+  font-size: clamp(2rem, 10vw, 2rem);
+  margin-bottom: 24px;
+}
+
+.chapterTitle {
+  font-weight: 700;
+  font-size: clamp(1.5rem, 10vw, 1.5rem);
+}
+
+.watchIcon {
+  color: #8c8c8c;
+  padding-right: 10px;
+}
+
+.watchIcon:hover {
+  color: #1976d2;
+  padding-right: 10px;
 }
