@@ -2,19 +2,20 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-26 19:50:04
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-06-28 17:22:54
+ * @LastEditTime: 2024-07-01 16:34:47
  * @FilePath: /online-course-project/src/app/frontendev/[frontCourseDetail]/page.js
  */
 "use client";
 import CourseContent from "@/components/CourseContent";
 import MainNav from "@/components/MainNav";
 import styles from "@/components/course.module.css";
+import AddIcon from "@mui/icons-material/Add";
 import LanguageIcon from "@mui/icons-material/Language";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import { useState } from "react";
 
@@ -98,6 +99,7 @@ const FrontCourseDetailPage = ({ courses }) => {
                 >
                   <Tab label="Course Content" value="1" />
                   <Tab label="Lecturer Introduction" value="2" />
+                  <Tab label="Course Feedback" value="3" />
                 </TabList>
               </Box>
               <TabPanel value="1">
@@ -105,8 +107,19 @@ const FrontCourseDetailPage = ({ courses }) => {
                   courseVideos={singleCourse.videos}
                   courseId={singleCourse.courseId}
                 />
+
+                {/* <Comments /> */}
               </TabPanel>
               <TabPanel value="2">Lecturer Introduction</TabPanel>
+              <TabPanel value="3">
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  startIcon={<AddIcon />}
+                >
+                  Post Your Feedback
+                </Button>
+              </TabPanel>
             </TabContext>
           </Box>
         </Container>

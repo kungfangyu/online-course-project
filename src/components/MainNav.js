@@ -1,11 +1,14 @@
 "use client";
 import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import InputBase from "@mui/material/InputBase";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Toolbar from "@mui/material/Toolbar";
@@ -66,7 +69,6 @@ function MainNav({ mode, toggleColorMode }) {
                 flexGrow: 1,
                 display: "flex",
                 alignItems: "center",
-                ml: "-18px",
                 px: 0,
               }}
             >
@@ -127,13 +129,25 @@ function MainNav({ mode, toggleColorMode }) {
                 alignItems: "center",
               }}
             >
+              <MenuItem>
+                <InputBase
+                  sx={{ flex: 1 }}
+                  placeholder="Search"
+                  inputProps={{ "aria-label": "search" }}
+                />
+                <IconButton type="button" aria-label="search">
+                  <SearchIcon />
+                </IconButton>
+              </MenuItem>
+              <Button variant="text" size="small" component="a">
+                WATCH LIST
+              </Button>
               <Button
                 color="primary"
                 variant="text"
                 size="small"
                 component="a"
-                href="/material-ui/getting-started/templates/sign-up/"
-                target="_blank"
+                href="/signup"
               >
                 Sign up
               </Button>
@@ -176,6 +190,7 @@ function MainNav({ mode, toggleColorMode }) {
                     </MenuItem>
                   </Menu>
                   <Divider />
+                  <MenuItem>WATCH LIST</MenuItem>
                   <MenuItem>
                     <Button
                       color="primary"
