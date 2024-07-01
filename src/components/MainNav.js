@@ -1,4 +1,5 @@
 "use client";
+import { BACKEND_PATH, FRONTEND_PATH } from "@/helps/variables";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AppBar from "@mui/material/AppBar";
@@ -17,7 +18,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-function MainNav({ mode, toggleColorMode }) {
+function MainNav({ watchlist }) {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -96,14 +97,14 @@ function MainNav({ mode, toggleColorMode }) {
                   onClose={handleMenuClose}
                 >
                   <MenuItem sx={{ py: "6px", px: "12px" }}>
-                    <Link href="/frontendev">Front-End Development</Link>
+                    <Link href={FRONTEND_PATH}>Front-End Development</Link>
                   </MenuItem>
                   <Divider />
                   <MenuItem
                     sx={{ py: "6px", px: "12px" }}
                     onClick={() => scrollToSection("BACKEND")}
                   >
-                    Back-End Development
+                    <Link href={BACKEND_PATH}>Back-End Development</Link>
                   </MenuItem>
                   <Divider />
                   <MenuItem
@@ -139,9 +140,15 @@ function MainNav({ mode, toggleColorMode }) {
                   <SearchIcon />
                 </IconButton>
               </MenuItem>
-              <Button variant="text" size="small" component="a">
-                WATCH LIST
-              </Button>
+
+              <MenuItem sx={{ py: "6px", px: "12px" }}>
+                <Link href={"/watchlist"}>
+                  <Typography variant="body2" color="text.primary">
+                    WATCH LIST
+                  </Typography>
+                </Link>
+              </MenuItem>
+
               <Button
                 color="primary"
                 variant="text"
@@ -171,9 +178,6 @@ function MainNav({ mode, toggleColorMode }) {
                     flexGrow: 1,
                   }}
                 >
-                  <MenuItem onClick={() => scrollToSection("ABOUT")}>
-                    ABOUT
-                  </MenuItem>
                   <MenuItem onClick={handleMenuOpen}>COURSES</MenuItem>
                   <Menu open={Boolean(anchorEl)} onClose={handleMenuClose}>
                     <MenuItem onClick={() => scrollToSection("FRONTEND")}>
@@ -196,7 +200,7 @@ function MainNav({ mode, toggleColorMode }) {
                       color="primary"
                       variant="contained"
                       component="a"
-                      href="/material-ui/getting-started/templates/sign-up/"
+                      href="/sign-up"
                       target="_blank"
                       sx={{ width: "100%" }}
                     >
