@@ -2,7 +2,7 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-26 15:28:27
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-06-28 16:34:34
+ * @LastEditTime: 2024-07-30 20:23:06
  * @FilePath: /online-course-project/src/components/CourseList.js
  */
 import Favorite from "@mui/icons-material/Favorite";
@@ -18,6 +18,7 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
+
 const CourseList = ({ courses }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -35,23 +36,22 @@ const CourseList = ({ courses }) => {
                 height: "100%",
               }}
             >
-              <Link href={`/frontendev/${course.courseId}`}>
+              <Link href={`/frontenddev/${course.courseId}`}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     height="194"
-                    image={course.image_url}
-                    alt="Paella dish"
+                    image={course.imageUrl}
                   />
                   <CardContent>
                     <Typography variant="h6" component="div">
-                      {course.title}
+                      {course.courseName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Lecture: {course.lecturer}
+                      Lecture: {course.instructor}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      Post Date: {course.published}
+                      Post Date: {course.postedDate}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -64,7 +64,7 @@ const CourseList = ({ courses }) => {
                 />
                 <IconButton
                   onClick={
-                    <Link href={`/frontendev/${course.courseId}`}></Link>
+                    <Link href={`/frontenddev/${course.courseId}`}></Link>
                   }
                 >
                   <VisibilityIcon />

@@ -18,21 +18,21 @@
 .courseMainContainer {
   display: flex;
   align-items: center;
-  padding-top: 160px;
-  padding-bottom: 96px;
+  padding-top: 104px;
+  padding-bottom: 48px;
 }
 
-/* sx={{
-        display: "flex",
-        alignItems: "center",
-        pt: { xs: 14, sm: 20 },
-        pb: { xs: 8, sm: 12 },
-    }} */
+.courseDetailTitleContainer {
+  display: flex;
+  align-items: center;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
 
 @media (min-width: 600px) {
   .courseMainContainer {
-    padding-top: 112px;
-    padding-bottom: 64px;
+    padding-top: 96px;
+    padding-bottom: 32px;
   }
 }
 
@@ -42,7 +42,7 @@
   font-weight: 700;
   color: #fff;
   text-shadow: black 0.1em 0.1em 0.2em;
-  font-size: clamp(2.5rem, 10vw, 3rem);
+  font-size: clamp(2rem, 10vw, 2rem);
 }
 
 .coursePageSubTitle {
@@ -51,7 +51,7 @@
   font-weight: 700;
   color: #fff;
   text-shadow: black 0.1em 0.1em 0.2em;
-  font-size: clamp(2rem, 10vw, 2rem);
+  font-size: clamp(1rem, 10vw, 1.5rem);
 }
 
 .pagination {
@@ -72,7 +72,7 @@
   text-align: left;
   color: #8c8c8c;
   font-weight: 400;
-  font-size: clamp(1rem, 10vw, 1.8rem);
+  font-size: clamp(0.6rem, 8vw, 1rem);
 }
 
 .contentMainTitle {

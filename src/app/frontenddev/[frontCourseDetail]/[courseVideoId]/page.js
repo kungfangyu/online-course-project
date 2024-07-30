@@ -3,7 +3,7 @@
  * @Date: 2024-06-27 18:07:30
  * @LastEditors: Do not edit
  * @LastEditTime: 2024-07-01 16:37:50
- * @FilePath: /online-course-project/src/app/frontendev/[frontCourseDetail]/[courseVideoId]/page.js
+ * @FilePath: /online-course-project/src/app/frontenddev/[frontCourseDetail]/[courseVideoId]/page.js
  */
 "use client";
 

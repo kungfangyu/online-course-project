@@ -34,7 +34,7 @@ const WatchCard = ({ courses }) => {
                 height: "100%",
               }}
             >
-              <Link href={`/frontendev/${course.courseId}`}>
+              <Link href={`/frontenddev/${course.courseId}`}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -61,7 +61,7 @@ const WatchCard = ({ courses }) => {
                 </IconButton>
                 <IconButton
                   onClick={
-                    <Link href={`/frontendev/${course.courseId}`}></Link>
+                    <Link href={`/frontenddev/${course.courseId}`}></Link>
                   }
                 >
                   <VisibilityIcon />

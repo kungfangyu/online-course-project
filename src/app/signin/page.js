@@ -2,7 +2,7 @@
  * @Author: Fangyu Kung
  * @Date: 2024-07-01 17:10:52
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-01 17:14:00
+ * @LastEditTime: 2024-07-14 22:36:13
  * @FilePath: /online-course-project/src/app/signin/page.js
  */
 "use client";
@@ -17,15 +17,26 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+import { login } from "@/api/auth";
+
+export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await login(email, password);
+      const token = res.data;
+      localStorage.setItem("token", token);
+      router.push("/");
+    } catch (error) {
+      console.error("login failed", error);
+    }
   };
 
   return (
@@ -49,7 +60,7 @@ export default function SignUp() {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleSignIn}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
@@ -60,6 +71,8 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                 />
               </Grid>
@@ -71,6 +84,8 @@ export default function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
                 />
               </Grid>

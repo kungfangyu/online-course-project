@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-07-01 16:25:01
  * @FilePath: /online-course-project/src/helps/variables.js
  */
-export const FRONTEND_PATH = "/frontendev";
+export const FRONTEND_PATH = "/frontenddev";
 export const BACKEND_PATH = "/backenddev";
 export const DEVOPS_PATH = "/devops";
 export const TESTING_PATH = "/testingdev";
