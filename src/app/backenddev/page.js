@@ -2,11 +2,12 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-25 21:29:46
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-06-26 19:31:01
+ * @LastEditTime: 2024-07-30 23:12:31
  * @FilePath: /online-course-project/src/app/backenddev/page.js
  */
 "use client";
 
+import { getCourseList } from "@/api/courses";
 import styles from "@/components/course.module.css";
 import CourseList from "@/components/CourseList";
 import FilterSelection from "@/components/FilterSelection";
@@ -18,48 +19,26 @@ import Container from "@mui/material/Container";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
 
 const BackendDevPage = () => {
+  const [courses, setCourses] = useState([]);
+
   const options = ["Node.js", "Express", "MongoDB", "SQL", "Python", "Django"];
 
-  const backendCourses = [
-    {
-      courseId: "BE101",
-      title: "Introduction to Node.js & Express",
-      lecturer: "Alice Johnson",
-      postDate: "2024-01-15",
-    },
-    {
-      courseId: "BE102",
-      title: "Advanced MongoDB Techniques",
-      lecturer: "Robert Smith",
-      postDate: "2024-02-10",
-    },
-    {
-      courseId: "BE103",
-      title: "SQL Database Management",
-      lecturer: "Jessica Brown",
-      postDate: "2024-03-05",
-    },
-    {
-      courseId: "BE104",
-      title: "Building APIs with Python and Flask",
-      lecturer: "David Wilson",
-      postDate: "2024-04-12",
-    },
-    {
-      courseId: "BE105",
-      title: "Web Development with Django",
-      lecturer: "Daniel Miller",
-      postDate: "2024-05-20",
-    },
-    {
-      courseId: "BE106",
-      title: "Scalable Back-End Architecture",
-      lecturer: "Emma Martinez",
-      postDate: "2024-06-18",
-    },
-  ];
+  useEffect(() => {
+    const fetchCoursesList = async () => {
+      try {
+        const response = await getCourseList("backend");
+        console.log(response.data);
+        setCourses(response.data);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    fetchCoursesList();
+  }, []);
 
   return (
     <div>
@@ -104,7 +83,7 @@ const BackendDevPage = () => {
             <FilterSelection filter={options} />
           </Box>
           <Box>
-            <CourseList courses={backendCourses} />
+            <CourseList courses={courses} category={"backenddev"} />
           </Box>
         </Stack>
         <Stack spacing={2} mt={8}>

@@ -2,7 +2,7 @@
  * @Author: Fangyu Kung
  * @Date: 2024-07-14 17:01:00
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-14 17:07:47
+ * @LastEditTime: 2024-07-30 23:58:38
  * @FilePath: /online-course-project/src/api/axios.js
  */
 import request from "axios";
@@ -18,8 +18,8 @@ const service = request.create({
 service.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    if (token != null && typeof token != "undefined") {
+      config.headers["Authorization"] = token;
     }
     return config;
   },

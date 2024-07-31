@@ -1,4 +1,5 @@
 "use client";
+import { parseJwt } from "@/helps/parseJWT";
 import { BACKEND_PATH, FRONTEND_PATH } from "@/helps/variables";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
@@ -16,11 +17,31 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+function MainNav() {
+  const router = useRouter();
 
-function MainNav({ watchlist }) {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    // check token
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true);
+      const parse = parseJwt(token);
+      setUserName(parse.firstName);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    router.push("/");
+  };
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
@@ -100,26 +121,15 @@ function MainNav({ watchlist }) {
                     <Link href={FRONTEND_PATH}>Front-End Development</Link>
                   </MenuItem>
                   <Divider />
-                  <MenuItem
-                    sx={{ py: "6px", px: "12px" }}
-                    onClick={() => scrollToSection("BACKEND")}
-                  >
+                  <MenuItem sx={{ py: "6px", px: "12px" }}>
                     <Link href={BACKEND_PATH}>Back-End Development</Link>
                   </MenuItem>
                   <Divider />
-                  <MenuItem
-                    sx={{ py: "6px", px: "12px" }}
-                    onClick={() => scrollToSection("DEVOPS")}
-                  >
+                  <MenuItem sx={{ py: "6px", px: "12px" }}>
                     DevOps Development
                   </MenuItem>
                   <Divider />
-                  <MenuItem
-                    sx={{ py: "6px", px: "12px" }}
-                    onClick={() => scrollToSection("DEVOPS")}
-                  >
-                    Testing
-                  </MenuItem>
+                  <MenuItem sx={{ py: "6px", px: "12px" }}>Testing</MenuItem>
                 </Menu>
               </Box>
             </Box>
@@ -148,16 +158,27 @@ function MainNav({ watchlist }) {
                   </Typography>
                 </Link>
               </MenuItem>
-
-              <Button
-                color="primary"
-                variant="text"
-                size="small"
-                component="a"
-                href="/signup"
-              >
-                Sign up
-              </Button>
+              {isAuthenticated ? (
+                <Button
+                  color="primary"
+                  variant="text"
+                  size="small"
+                  component="a"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              ) : (
+                <Button
+                  color="primary"
+                  variant="text"
+                  size="small"
+                  component="a"
+                  href="/signup"
+                >
+                  Sign up
+                </Button>
+              )}
             </Box>
             <Box sx={{ display: { sm: "", md: "none" } }}>
               <Button
@@ -204,7 +225,7 @@ function MainNav({ watchlist }) {
                       target="_blank"
                       sx={{ width: "100%" }}
                     >
-                      Sign up
+                      {isAuthenticated ? userName : "Sign up"}
                     </Button>
                   </MenuItem>
                 </Box>

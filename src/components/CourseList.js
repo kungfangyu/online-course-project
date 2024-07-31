@@ -2,7 +2,7 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-26 15:28:27
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-30 20:23:06
+ * @LastEditTime: 2024-07-31 00:29:23
  * @FilePath: /online-course-project/src/components/CourseList.js
  */
 import Favorite from "@mui/icons-material/Favorite";
@@ -19,7 +19,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
-const CourseList = ({ courses }) => {
+const CourseList = ({ courses, category, isLogin }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   return (
@@ -36,7 +36,7 @@ const CourseList = ({ courses }) => {
                 height: "100%",
               }}
             >
-              <Link href={`/frontenddev/${course.courseId}`}>
+              <Link href={`/${category}/${course.courseId}`}>
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -60,7 +60,7 @@ const CourseList = ({ courses }) => {
                 <Checkbox
                   {...label}
                   icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite />}
+                  checkedIcon={<Favorite disabled={!isLogin} />}
                 />
                 <IconButton
                   onClick={

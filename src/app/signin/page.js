@@ -2,11 +2,13 @@
  * @Author: Fangyu Kung
  * @Date: 2024-07-01 17:10:52
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-14 22:36:13
+ * @LastEditTime: 2024-07-31 00:19:29
  * @FilePath: /online-course-project/src/app/signin/page.js
  */
 "use client";
 
+import { login } from "@/api/auth";
+import { parseJwt } from "@/helps/parseJWT";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -20,8 +22,6 @@ import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { login } from "@/api/auth";
-
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +32,8 @@ export default function SignIn() {
     try {
       const res = await login(email, password);
       const token = res.data;
+      const parse = parseJwt(token);
+      console.log(parse);
       localStorage.setItem("token", token);
       router.push("/");
     } catch (error) {

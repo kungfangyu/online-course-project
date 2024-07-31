@@ -2,7 +2,7 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-25 21:29:46
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-30 15:45:41
+ * @LastEditTime: 2024-07-31 00:28:39
  * @FilePath: /online-course-project/src/app/frontenddev/page.js
  */
 "use client";
@@ -24,10 +24,15 @@ import { useEffect, useState } from "react";
 const FrontendPage = () => {
   const [courses, setCourses] = useState([]);
   const options = ["HTML", "CSS", "JavaScript", "React", "Vue", "Angular"];
-
+  const [isLogin, setIsLogin] = useState(false);
   useEffect(() => {
     const fetchCoursesList = async () => {
       try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          setIsLogin(true);
+        }
+        console.log(token);
         const response = await getCourseList("frontend");
         console.log(response.data);
         setCourses(response.data);
@@ -82,7 +87,11 @@ const FrontendPage = () => {
             <FilterSelection filter={options} />
           </Box>
           <Box>
-            <CourseList courses={courses} />
+            <CourseList
+              courses={courses}
+              category="frontendddev"
+              isLogin={isLogin}
+            />
           </Box>
         </Stack>
         <Stack spacing={2} mt={8}>
