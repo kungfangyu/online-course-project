@@ -2,7 +2,7 @@
  * @Author: Fangyu Kung
  * @Date: 2024-07-01 17:27:07
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-31 19:33:26
+ * @LastEditTime: 2024-07-31 19:57:16
  * @FilePath: /online-course-project/src/app/watchlist/page.js
  */
 
@@ -20,6 +20,7 @@ import { useCallback, useEffect, useState } from "react";
 
 const WatchListPage = () => {
   const [courses, setCourses] = useState([]);
+
   const fetchWatchList = useCallback(async () => {
     try {
       const token = localStorage.getItem("token");
@@ -36,10 +37,6 @@ const WatchListPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchWatchList();
-  }, [fetchWatchList]);
-
   const handleRemoveCourse = async (courseId) => {
     try {
       const token = localStorage.getItem("token");
@@ -48,7 +45,7 @@ const WatchListPage = () => {
         throw new Error("User is not authenticated");
       }
       const response = await deleteCourseFromWatchList(userId, courseId);
-      if (response.success) {
+      if (response.status === 200) {
         fetchWatchList();
       } else {
         console.error(
@@ -60,6 +57,10 @@ const WatchListPage = () => {
       console.error("Error removing course from watchList:", error);
     }
   };
+
+  useEffect(() => {
+    fetchWatchList();
+  }, [fetchWatchList]);
 
   return (
     <>

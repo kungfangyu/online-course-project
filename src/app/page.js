@@ -169,7 +169,7 @@ export default function Home() {
                   height={150}
                 />
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  Front-End
+                  Back-End
                 </Typography>
               </Box>
             </Grid>
@@ -190,7 +190,7 @@ export default function Home() {
                   height={150}
                 />
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  Front-End
+                  DevOps
                 </Typography>
               </Box>
             </Grid>
@@ -211,7 +211,7 @@ export default function Home() {
                   height={150}
                 />
                 <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  Front-End
+                  Testing
                 </Typography>
               </Box>
             </Grid>

@@ -2,7 +2,7 @@
  * @Author: Fangyu Kung
  * @Date: 2024-07-31 11:52:55
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-31 19:34:43
+ * @LastEditTime: 2024-07-31 23:50:12
  * @FilePath: /online-course-project/src/api/watchlist.js
  */
 import service from "./axios";

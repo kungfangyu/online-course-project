@@ -2,10 +2,13 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-26 15:28:27
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-31 18:53:48
+ * @LastEditTime: 2024-07-31 22:26:39
  * @FilePath: /online-course-project/src/components/CourseList.js
  */
-import { addCourseToWatchList } from "@/api/watchlist";
+import {
+  addCourseToWatchList,
+  deleteCourseFromWatchList,
+} from "@/api/watchlist";
 import { parseJwt } from "@/helps/parseJWT";
 import Favorite from "@mui/icons-material/Favorite";
 import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
@@ -20,34 +23,60 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 import { useState } from "react";
 
-const CourseList = ({ courses, category, isLogin }) => {
+const CourseList = ({ courses, category, isLogin, fetchCoursesList }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  const [courseId, setCourseId] = useState("");
-  const [isAdd, setIsAdd] = useState(false);
+  const [courseList, setCourseList] = useState(courses);
 
   const handleAddToWatch = async (courseId) => {
     try {
-      // 从 localStorage 中获取 token
       const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("User is not authenticated");
       }
-
       const userId = parseJwt(token).id;
       const response = await addCourseToWatchList(userId, courseId);
-      setIsAdd(true);
+      fetchCoursesList();
       console.log("Course added to watchList:", response.data);
     } catch (error) {
       console.error("Error adding course to watchList:", error);
     }
   };
 
-  const handleClick = (courseId) => {
+  const handleRemoveFromWatch = async (courseId) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("User is not authenticated");
+      }
+
+      const userId = parseJwt(token).id;
+      const response = await deleteCourseFromWatchList(userId, courseId);
+      if (response.status === 200) {
+        console.log("Course removed from watchList:", response.message);
+        fetchCoursesList();
+      } else {
+        console.error(
+          "Failed to remove course from watchList:",
+          response.message
+        );
+      }
+    } catch (error) {
+      console.error("Error removing course from watchList:", error);
+    }
+  };
+
+  const handleClick = (courseId, isChecked) => {
     if (isLogin) {
-      setCourseId(courseId);
-      handleAddToWatch(courseId);
-    } else {
-      console.log("Please login first");
+      const updatedCourses = courseList.map((course) =>
+        course.courseId === courseId ? { ...course, isAdd: isChecked } : course
+      );
+      setCourseList(updatedCourses);
+
+      if (isChecked) {
+        handleAddToWatch(courseId);
+      } else {
+        handleRemoveFromWatch(courseId);
+      }
     }
   };
 
@@ -87,13 +116,13 @@ const CourseList = ({ courses, category, isLogin }) => {
               </Link>
               <CardActions disableSpacing>
                 <Checkbox
-                  {...label}
                   icon={<FavoriteBorder />}
-                  checkedIcon={<Favorite disabled={!isLogin} />}
-                  onChange={() => {
-                    console.log("click");
-                    handleClick(course.courseId);
+                  checkedIcon={<Favorite />}
+                  checked={course.isAdd}
+                  onChange={(event) => {
+                    handleClick(course.courseId, event.target.checked);
                   }}
+                  disabled={!isLogin}
                 />
               </CardActions>
             </Card>

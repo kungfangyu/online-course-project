@@ -3,6 +3,7 @@ import { getCourse } from "@/api/courses";
 import styles from "@/components/course.module.css";
 import CourseContent from "@/components/CourseContent";
 import MainNav from "@/components/MainNav";
+import { PopupAddComment } from "@/components/PopupAddComment";
 import AddIcon from "@mui/icons-material/Add";
 import LanguageIcon from "@mui/icons-material/Language";
 import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
@@ -26,6 +27,8 @@ const FrontCourseDetailPage = () => {
   const [currentVideo, setCurrentVideo] = useState(null);
   const [currentTitle, setCurrentTitle] = useState("");
   const [currentDesc, setCurrentDesc] = useState("");
+
+  const [open, setOpen] = useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -62,6 +65,10 @@ const FrontCourseDetailPage = () => {
     setCurrentVideo(videoUrl + "?rel=0");
     setCurrentTitle(videoTitle);
     setCurrentDesc(videoDescription);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -144,9 +151,13 @@ const FrontCourseDetailPage = () => {
                   variant="outlined"
                   color="primary"
                   startIcon={<AddIcon />}
+                  onClick={() => setOpen(true)}
                 >
                   Post Your Feedback
                 </Button>
+                {open && (
+                  <PopupAddComment open={open} handleClose={handleClose} />
+                )}
               </TabPanel>
             </TabContext>
           </Box>
