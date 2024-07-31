@@ -1,6 +1,7 @@
 "use client";
 import { parseJwt } from "@/helps/parseJWT";
 import { BACKEND_PATH, FRONTEND_PATH } from "@/helps/variables";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AppBar from "@mui/material/AppBar";
@@ -94,14 +95,16 @@ function MainNav() {
                 px: 0,
               }}
             >
-              <Image
-                src={
-                  "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
-                }
-                alt="logo of sitemark"
-                width={140}
-                height={30}
-              />
+              <Link href="/">
+                <Image
+                  src={
+                    "https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg"
+                  }
+                  alt="logo of sitemark"
+                  width={140}
+                  height={30}
+                />
+              </Link>
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <MenuItem
                   onClick={handleMenuOpen}
@@ -159,15 +162,21 @@ function MainNav() {
                 </Link>
               </MenuItem>
               {isAuthenticated ? (
-                <Button
-                  color="primary"
-                  variant="text"
-                  size="small"
-                  component="a"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </Button>
+                <>
+                  <Typography variant="body2" color="text.primary">
+                    Welcome {userName}
+                  </Typography>
+
+                  <IconButton
+                    color="primary"
+                    variant="text"
+                    size="small"
+                    component="a"
+                    onClick={handleLogout}
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                </>
               ) : (
                 <Button
                   color="primary"

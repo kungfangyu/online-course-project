@@ -2,17 +2,18 @@
  * @Author: Fangyu Kung
  * @Date: 2024-06-25 21:29:46
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-31 00:28:39
+ * @LastEditTime: 2024-07-31 18:55:19
  * @FilePath: /online-course-project/src/app/frontenddev/page.js
  */
 "use client";
 
-import { getCourseList } from "@/api/courses";
+import { getCourseList, getCourseListByUser } from "@/api/courses";
 import styles from "@/components/course.module.css";
 import CourseList from "@/components/CourseList";
 import FilterSelection from "@/components/FilterSelection";
 import Footer from "@/components/Footer";
 import MainNav from "@/components/MainNav";
+import { parseJwt } from "@/helps/parseJWT";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -29,13 +30,15 @@ const FrontendPage = () => {
     const fetchCoursesList = async () => {
       try {
         const token = localStorage.getItem("token");
-        if (token) {
+        const userId = parseJwt(token).id;
+        if (!token) {
+          const response = await getCourseList("frontend");
+          setCourses(response.data);
+        } else {
           setIsLogin(true);
+          const response = await getCourseListByUser(userId, "frontend");
+          setCourses(response.data);
         }
-        console.log(token);
-        const response = await getCourseList("frontend");
-        console.log(response.data);
-        setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
       }
@@ -89,7 +92,7 @@ const FrontendPage = () => {
           <Box>
             <CourseList
               courses={courses}
-              category="frontendddev"
+              category="frontenddev"
               isLogin={isLogin}
             />
           </Box>

@@ -2,112 +2,65 @@
  * @Author: Fangyu Kung
  * @Date: 2024-07-01 17:27:07
  * @LastEditors: Do not edit
- * @LastEditTime: 2024-07-01 18:03:17
+ * @LastEditTime: 2024-07-31 19:33:26
  * @FilePath: /online-course-project/src/app/watchlist/page.js
  */
 
 "use client";
 
+import { deleteCourseFromWatchList, getWatchList } from "@/api/watchlist";
 import styles from "@/components/course.module.css";
 import MainNav from "@/components/MainNav";
 import WatchCard from "@/components/WatchCard";
+import { parseJwt } from "@/helps/parseJWT";
 import { Divider, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-
-const courses = [
-  {
-    courseId: "FE101",
-    title: "Introduction to HTML & CSS",
-    description: "string",
-    lecturer: "Jane Smith",
-    category: "FE",
-    image_url: "/images/image01.webp",
-    videos: [
-      {
-        id: "FE10101",
-        title: "Introduction to HTML & CSS #0",
-        description: "Introduction",
-        youtube_id: "string",
-        duration: "6:10",
-        order: "1",
-        iframe: "https://www.youtube.com/embed/6v2L2UGZJAM",
-      },
-      {
-        id: "FE10102",
-        title: "Introduction to HTML & CSS #1",
-        description: "Introduction",
-        youtube_id: "string",
-        duration: "6:10",
-        order: "2",
-        iframe: "https://www.youtube.com/embed/6v2L2UGZJAM",
-      },
-    ],
-    published: "2024-01-15",
-  },
-  {
-    courseId: "FE102",
-    title: "Advanced JavaScript Techniques",
-    description: "string",
-    lecturer: "Jane Smith",
-    category: "FE",
-    image_url: "/images/image01.webp",
-    videos: [
-      {
-        id: "FE10201",
-        title: "Advanced JavaScript Techniques #0",
-        description: "Introduction",
-        youtube_id: "string",
-        duration: "6:10",
-        order: "number",
-        iframe: "https://www.youtube.com/embed/6v2L2UGZJAM",
-      },
-    ],
-    published: "2024-02-10",
-  },
-  {
-    courseId: "FE103",
-    title: "Responsive Web Design with Flexbox",
-    description: "string",
-    lecturer: "Emily Johnson",
-    category: "FE",
-    image_url: "/images/image01.webp",
-    videos: [
-      {
-        id: "FE10301",
-        title: "Responsive Web Design with Flexbox #0",
-        description: "Introduction",
-        youtube_id: "string",
-        duration: "6:10",
-        order: "number",
-        iframe: "https://www.youtube.com/embed/6v2L2UGZJAM",
-      },
-    ],
-    published: "2024-02-10",
-  },
-  {
-    courseId: "FE104",
-    title: "Responsive Web Design with Flexbox",
-    description: "string",
-    lecturer: "Emily Johnson",
-    category: "FE",
-    image_url: "/images/image01.webp",
-    videos: [
-      {
-        id: "FE10301",
-        title: "Responsive Web Design with Flexbox #0",
-        description: "Introduction",
-        youtube_id: "string",
-        duration: "6:10",
-        order: "number",
-        iframe: "https://www.youtube.com/embed/6v2L2UGZJAM",
-      },
-    ],
-    published: "2024-02-10",
-  },
-];
+import { useCallback, useEffect, useState } from "react";
 
 const WatchListPage = () => {
+  const [courses, setCourses] = useState([]);
+  const fetchWatchList = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = parseJwt(token).id;
+      const response = await getWatchList(userId);
+      setCourses(response.data.items);
+      console.log(response.data);
+      if (!token) {
+        throw new Error("User is not authenticated");
+      }
+      console.log(token);
+    } catch (error) {
+      console.error("Error fetching watchList:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchWatchList();
+  }, [fetchWatchList]);
+
+  const handleRemoveCourse = async (courseId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = parseJwt(token).id;
+      if (!token) {
+        throw new Error("User is not authenticated");
+      }
+      const response = await deleteCourseFromWatchList(userId, courseId);
+      if (response.success) {
+        fetchWatchList();
+      } else {
+        console.error(
+          "Failed to remove course from watchList:",
+          response.message
+        );
+      }
+    } catch (error) {
+      console.error("Error removing course from watchList:", error);
+    }
+  };
+
   return (
     <>
       <MainNav />
@@ -119,7 +72,10 @@ const WatchListPage = () => {
           <Divider />
         </Container>
         <Container>
-          <WatchCard courses={courses} />
+          <WatchCard
+            courses={courses}
+            handleRemoveCourse={handleRemoveCourse}
+          />
         </Container>
       </Box>
     </>
